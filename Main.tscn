@@ -1,0 +1,30 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Ball.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://CPU.tscn" type="PackedScene" id=3]
+[ext_resource path="res://HUD.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Main.gd" type="Script" id=5]
+[ext_resource path="res://music/arcade-music.ogg" type="AudioStream" id=6]
+
+[node name="Main" type="Node"]
+script = ExtResource( 5 )
+
+[node name="Ball" parent="." instance=ExtResource( 1 )]
+position = Vector2( 502, 300 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+
+[node name="CPU" parent="." instance=ExtResource( 3 )]
+
+[node name="GameTimer" type="Timer" parent="."]
+
+[node name="HUD" parent="." instance=ExtResource( 4 )]
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+
+[connection signal="hit_cpu_side" from="Ball" to="." method="_on_Ball_hit_cpu_side"]
+[connection signal="hit_player_side" from="Ball" to="." method="_on_Ball_hit_player_side"]
+[connection signal="timeout" from="GameTimer" to="." method="_on_GameTimer_timeout"]
+[connection signal="start_game" from="HUD" to="." method="_on_HUD_start_game"]
